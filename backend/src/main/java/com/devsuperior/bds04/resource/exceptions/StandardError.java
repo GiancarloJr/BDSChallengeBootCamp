@@ -6,14 +6,14 @@ public class StandardError {
 
     private Instant timestamp;
     private Integer status;
-    private String error;
+    private String errors;
     private String message;
     private String path;
 
     public StandardError(Instant timestamp, Integer status, String error, String message, String path) {
         this.timestamp = timestamp;
         this.status = status;
-        this.error = error;
+        this.errors = error;
         this.message = message;
         this.path = path;
     }
@@ -37,11 +37,11 @@ public class StandardError {
     }
 
     public String getError() {
-        return error;
+        return errors;
     }
 
     public void setError(String error) {
-        this.error = error;
+        this.errors = error;
     }
 
     public String getMessage() {
