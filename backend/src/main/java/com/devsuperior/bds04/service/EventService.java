@@ -7,20 +7,21 @@ import com.devsuperior.bds04.entities.Event;
 import com.devsuperior.bds04.repository.CityRepository;
 import com.devsuperior.bds04.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class EventService {
 
     @Autowired
     private EventRepository eventRepository;
 
-    public List<EventDTO> findAll(Long id) {
-        List<EventDTO> listDTO = new ArrayList<>();
-        for (Event entity : eventRepository.findAll()) {
-            listDTO.add(new EventDTO(entity));
-        }
-        return listDTO;
+    public Page<EventDTO> findAll(Pageable pageable) {
+        Page<Event> list = eventRepository.findAll(pageable);
+        return list.map(event -> new EventDTO(event));
     }
 }
