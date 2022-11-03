@@ -20,8 +20,27 @@ public class EventService {
     @Autowired
     private EventRepository eventRepository;
 
+    @Autowired
+    private CityRepository cityRepository;
+
     public Page<EventDTO> findAll(Pageable pageable) {
         Page<Event> list = eventRepository.findAll(pageable);
         return list.map(event -> new EventDTO(event));
+    }
+
+    public EventDTO insert(EventDTO eventDTO){
+        Event obj = new Event();
+        obj.setName(eventDTO.getName());
+        obj.setDate(eventDTO.getDate());
+        obj.setUrl(eventDTO.getUrl());
+        obj.setCity(cityRepository.getReferenceById(eventDTO.getCityId()));
+        return new EventDTO(eventRepository.save(obj));
+    }
+
+    public void convertDtoToEntity(EventDTO eventDTO,Event entity){
+        entity.setName(eventDTO.getName());
+        entity.setDate(eventDTO.getDate());
+        entity.setUrl(eventDTO.getUrl());
+        entity.setCity(cityRepository.getReferenceById(eventDTO.getCityId()));
     }
 }
